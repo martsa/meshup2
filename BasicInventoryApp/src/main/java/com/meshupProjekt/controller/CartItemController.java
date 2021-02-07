@@ -1,5 +1,7 @@
 package com.meshupProjekt.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,8 +35,12 @@ public class CartItemController {
 	
 	@GetMapping("/cartItems")
 	public String listProducts(Model model) {
-		return listByPage(model, 1, "id", "asc", "");
+
+	List<CartItem> listCartItems=cartItemRepository.findAll();
+	model.addAttribute("listCartItems",listCartItems);
+	return "cart_items";
 	}
+	
 	
 	@GetMapping("/cartItems/page/{pageNumber}")
 	public String listByPage(Model model, @PathVariable int pageNumber, @RequestParam String sortField, @RequestParam String sortDir, @RequestParam String keyword){

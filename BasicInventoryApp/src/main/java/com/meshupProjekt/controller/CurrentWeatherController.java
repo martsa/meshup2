@@ -7,8 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.meshupProjekt.model.CurrentWeather;
+import com.meshupProjekt.service.LiveWeatherService;
+import com.meshupProjekt.service.StubWeatherService;
 
-@Controller
+
+/*@Controller
 public class CurrentWeatherController {
     @GetMapping("/current-weather")
     public String getCurrentWeather(Model model) {
@@ -16,5 +19,25 @@ public class CurrentWeatherController {
         model.addAttribute("currentWeather", currentWeather);
         return "current-weather";
     }
-}
+}*/
+@Controller
+public class CurrentWeatherController {
+ 
+    private final StubWeatherService stubWeatherService;
+    private final LiveWeatherService liveWeatherService;
+ 
+    public CurrentWeatherController(StubWeatherService stubWeatherService, LiveWeatherService liveWeatherService) {
+        this.stubWeatherService = stubWeatherService;
+        this.liveWeatherService = liveWeatherService;
+    }
+ 
+    @GetMapping("/current-weather")
+    public String getCurrentWeather(Model model) {
+        model.addAttribute("currentWeather", liveWeatherService.getCurrentWeather("zurich","switzerland"));
+        return "current-weather";
+    }
 
+	public StubWeatherService getStubWeatherService() {
+		return stubWeatherService;
+	}
+}

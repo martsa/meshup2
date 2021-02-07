@@ -9,6 +9,5 @@ import com.meshupProjekt.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-	@Query("SELECT u FROM User u WHERE CONCAT(u.id, ' ', u.email) LIKE %?1%")
-	public Page<User> findAll(String keyword, Pageable pageable);
+	
 }

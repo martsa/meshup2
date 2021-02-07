@@ -1,5 +1,7 @@
 package com.meshupProjekt.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,26 +29,12 @@ public class UserController {
 	
 	@GetMapping("/users")
 	public String showUserList(Model model) {
-		return listByPage(model, 1, "id", "asc", "");
+      List<User> listUsers=userRepository.findAll();
+      model.addAttribute("listUsers",listUsers);
+      return "users";
+	
 	}
 	
-	@GetMapping("/users/page/{pageNumber}")
-	public String listByPage(Model model, @PathVariable int pageNumber, @RequestParam String sortField, @RequestParam String sortDir, @RequestParam String keyword){
-		Sort sort = Sort.by(sortField);
-		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-		Page<User> page = userRepository.findAll(keyword, PageRequest.of(pageNumber - 1, Constants.PAGE_SIZE, sort));
-		
-		model.addAttribute("currentPage", pageNumber);
-		model.addAttribute("totalItems", page.getTotalElements());
-		model.addAttribute("totalPages", page.getTotalPages());
-		model.addAttribute("listUsers", page.getContent());
-		model.addAttribute("sortField", sortField);
-		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-		model.addAttribute("keyword", keyword);
-		
-		return "users";
-	}
 	
 	@GetMapping("/users/new")
 	public String showCreateNewUserForm(Model model) {

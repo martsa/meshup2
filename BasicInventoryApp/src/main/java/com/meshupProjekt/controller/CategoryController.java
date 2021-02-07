@@ -1,5 +1,7 @@
 package com.meshupProjekt.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meshupProjekt.Constants;
 import com.meshupProjekt.model.Category;
+import com.meshupProjekt.model.User;
 import com.meshupProjekt.repository.CategoryRepository;
 
 @Controller
@@ -23,26 +26,14 @@ public class CategoryController {
 	
 	@GetMapping("/categories")
 	public String listCategories(Model model) {
-		return listByPage(model, 1, "id", "asc", "");
-	}
-	
-	@GetMapping("/categories/page/{pageNumber}")
-	public String listByPage(Model model, @PathVariable int pageNumber, @RequestParam String sortField, @RequestParam String sortDir, @RequestParam String keyword){
-		Sort sort = Sort.by(sortField);
-		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-		Page<Category> page = categoryRepository.findAll(keyword, PageRequest.of(pageNumber - 1, Constants.PAGE_SIZE, sort));
-		
-		model.addAttribute("currentPage", pageNumber);
-		model.addAttribute("totalItems", page.getTotalElements());
-		model.addAttribute("totalPages", page.getTotalPages());
-		model.addAttribute("listCategories", page.getContent());
-		model.addAttribute("sortField", sortField);
-		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-		model.addAttribute("keyword", keyword);
-		
+
+		List <Category> listCategory=categoryRepository.findAll();
+		model.addAttribute("listCategories", listCategory);
 		return "categories";
 	}
+	
+	
+	
 	
 	@GetMapping("/categories/new")
 	public String showCategoryNewForm(Model model) {

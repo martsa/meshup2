@@ -1,5 +1,7 @@
 package com.meshupProjekt.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meshupProjekt.Constants;
 import com.meshupProjekt.model.Brand;
+import com.meshupProjekt.model.User;
 import com.meshupProjekt.repository.BrandRepository;
 import com.meshupProjekt.repository.CategoryRepository;
 
@@ -27,8 +30,11 @@ public class BrandController {
 	
 	@GetMapping("/brands")
 	public String listProducts(Model model) {
-		return listByPage(model, 1, "id", "asc", "");
+		List <Brand> listBrands=brandRepository.findAll();
+		model.addAttribute("listBrands",listBrands);
+		return "brands";
 	}
+	
 	
 	@GetMapping("/brands/page/{pageNumber}")
 	public String listByPage(Model model, @PathVariable int pageNumber, @RequestParam String sortField, @RequestParam String sortDir, @RequestParam String keyword){
