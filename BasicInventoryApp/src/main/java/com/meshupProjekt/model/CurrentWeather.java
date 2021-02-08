@@ -10,9 +10,7 @@ public class CurrentWeather implements Serializable {
     private BigDecimal temperature;
     private BigDecimal feelsLike;
    
-    
-   
-    
+  
     
     public String getDescription() {
 		return description;

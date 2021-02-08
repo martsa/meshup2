@@ -33,7 +33,7 @@ public class CurrentWeatherController {
  
     @GetMapping("/current-weather")
     public String getCurrentWeather(Model model) {
-        model.addAttribute("currentWeather", liveWeatherService.getCurrentWeather("zurich","switzerland"));
+        model.addAttribute("currentWeather", liveWeatherService.getCurrentWeather("winterthur","switzerland"));
         return "current-weather";
     }
 
