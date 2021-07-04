@@ -1,14 +1,10 @@
 package com.meshupProjekt.controller;
 
-import java.math.BigDecimal;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.meshupProjekt.model.CurrentWeather;
 import com.meshupProjekt.service.LiveWeatherService;
-import com.meshupProjekt.service.StubWeatherService;
 
 
 /*@Controller
@@ -23,11 +19,9 @@ public class CurrentWeatherController {
 @Controller
 public class CurrentWeatherController {
  
-    private final StubWeatherService stubWeatherService;
     private final LiveWeatherService liveWeatherService;
  
-    public CurrentWeatherController(StubWeatherService stubWeatherService, LiveWeatherService liveWeatherService) {
-        this.stubWeatherService = stubWeatherService;
+    public CurrentWeatherController(LiveWeatherService liveWeatherService) {
         this.liveWeatherService = liveWeatherService;
     }
  
@@ -37,7 +31,5 @@ public class CurrentWeatherController {
         return "current-weather";
     }
 
-	public StubWeatherService getStubWeatherService() {
-		return stubWeatherService;
-	}
+	
 }

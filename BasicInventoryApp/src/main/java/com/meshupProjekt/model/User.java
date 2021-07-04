@@ -15,16 +15,23 @@ import javax.persistence.ManyToMany;
 @Entity
 public class User {
 
+	//generating primary key 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	//defining table attribute for creating table content for email 
+	//hybernate creates table for us on connecting to database 
+	
 	@Column(length = 45, nullable = false, unique = true)
 	private String email;
 	
+	// 
 	@Column(length = 10, nullable = false)
 	private String password;
 
+	//many to many relationship mapping 
+	
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();

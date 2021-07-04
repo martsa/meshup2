@@ -27,6 +27,7 @@ public class UserController {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	// get list of users from database using repository defualt function findall from userrepo and pass to thymeleaf using model object
 	@GetMapping("/users")
 	public String showUserList(Model model) {
       List<User> listUsers=userRepository.findAll();
@@ -35,6 +36,7 @@ public class UserController {
 	
 	}
 	
+	//creating new user form by retreiving userrole from role repo and pass to thymeleaf using model object 
 	
 	@GetMapping("/users/new")
 	public String showCreateNewUserForm(Model model) {

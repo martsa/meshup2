@@ -26,10 +26,14 @@ import com.meshupProjekt.repository.ProductRepository;
 public class ProductController {
 
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductRepository productRepository;        //retrieve details from prodcutrepository using autowired
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	
+	
+	// displaysing all products by retreiving it from productRepository into listProduct 
 	
 	@GetMapping("/products")
 	public String listProducts(Model model) {
@@ -39,14 +43,15 @@ public class ProductController {
 	}
 
 	
-	
+	// creating new product
 	@GetMapping("/products/new")
 	public String showProductNewForm(Model model) {
 		model.addAttribute("product", new Product());
-		model.addAttribute("listCategories", categoryRepository.findAll());
+		model.addAttribute("listCategories", categoryRepository.findAll());// get list of category from cateogory repo
 		return "product_form";
 	}
 	
+	//save product 
 	@PostMapping("products/save")
 	public String saveProduct(Product product, HttpServletRequest request) {
 		String[] detailIds = request.getParameterValues("detailId");
@@ -61,9 +66,11 @@ public class ProductController {
 			}
 		}
 		
-		productRepository.save(product);
+		productRepository.save(product);         // spring data repository default method to save product in database ie save
 		return "redirect:/products";
 	}
+	
+	// edit product 
 	
 	@GetMapping("/products/edit/{id}")
 	public String showProductEditForm(@PathVariable Integer id, Model model) {
@@ -71,6 +78,8 @@ public class ProductController {
 		model.addAttribute("listCategories", categoryRepository.findAll());
 		return "product_form";
 	}
+	
+	//delete product 
 	
 	@GetMapping("/products/delete/{id}")
 	public String deleteProduct(@PathVariable Integer id, Model model) {

@@ -42,23 +42,7 @@ public class CartItemController {
 	}
 	
 	
-	@GetMapping("/cartItems/page/{pageNumber}")
-	public String listByPage(Model model, @PathVariable int pageNumber, @RequestParam String sortField, @RequestParam String sortDir, @RequestParam String keyword){
-		Sort sort = Sort.by(sortField);
-		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-		Page<CartItem> page = cartItemRepository.findAll(keyword, PageRequest.of(pageNumber - 1, Constants.PAGE_SIZE, sort));
-		
-		model.addAttribute("currentPage", pageNumber);
-		model.addAttribute("totalItems", page.getTotalElements());
-		model.addAttribute("totalPages", page.getTotalPages());
-		model.addAttribute("listCartItems", page.getContent());
-		model.addAttribute("sortField", sortField);
-		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-		model.addAttribute("keyword", keyword);
-		
-		return "cart_items";
-	}
+	
 	
 	@GetMapping("/cartItems/new")
 	public String showProductNewForm(Model model) {
